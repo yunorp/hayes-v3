@@ -31,6 +31,7 @@ export default function Home() {
   const [QTDchave, setQTDchave] = React.useState<number>(0);
   const [QTDalicate, setQTDalicate] = React.useState<number>(0);
   const [QTDoleo, setQTDoleo] = React.useState<number>(0);
+  const [QTDpneu, setQTDpneu] = React.useState<number>(0);
   const [QTDbateria, setQTDbateria] = React.useState<number>(0);
   const [ReparoFora, setReparoFora] = React.useState<number>(0);
   const [QTDkm, setQTDkm] = React.useState<number>(0);
@@ -68,7 +69,7 @@ export default function Home() {
     const { name, value } = e.target;
   
     // Verifica se o campo deve ser tratado como número
-    const updatedValue = ['tipo', 'quantidade', 'result', 'QTDlockpick', 'QTDflipper', 'QTDkit', 'QTDkm', 'QTDalicate', 'QTDbateria','QTDoleo','ReparoFora','QTDchave'].includes(name)
+    const updatedValue = ['tipo', 'quantidade', 'result', 'QTDlockpick', 'QTDflipper', 'QTDkit', 'QTDkm', 'QTDalicate', 'QTDbateria','QTDoleo','ReparoFora','QTDchave','QTDpneu'].includes(name)
       ? parseFloat(value)
       : value;
   
@@ -77,7 +78,7 @@ export default function Home() {
   
   // Movendo os cálculos para dentro da função updateValores
   const result1 = value1 * value2;
-  const result2 = QTDlockpick * 600 + QTDflipper * 1500 + QTDkit * 1000 + QTDkm  + QTDbateria * 500 + QTDalicate * 500 + QTDoleo * 1000 + QTDchave * 2000 + ReparoFora * 500;
+  const result2 = QTDlockpick * 600 + QTDflipper * 1500 + QTDkit * 1000 + QTDkm  + QTDbateria * 500 + QTDalicate * 500 + QTDoleo * 1000 + QTDchave * 2000 + ReparoFora * 500 + QTDpneu * 500;
   const result = result1 + result2;
   const valorAprendiz = result * 0.45;
   const valorMaquinaAprendiz = result - valorAprendiz;
@@ -156,6 +157,9 @@ export default function Home() {
   const handleQTDchaveChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQTDchave(Number(e.target.value));
   };
+  const handleQTDpneuChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setQTDpneu(Number(e.target.value));
+  };
 
   const handleQTDalicateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQTDalicate(Number(e.target.value));
@@ -182,7 +186,7 @@ export default function Home() {
 
   const updateValores = (tipo: number, quantidade: number) => {
     const result1 = value1 * formData.tipo;
-    const result2 = QTDlockpick * 600 + QTDflipper * 1500 + QTDkit * 1000 + QTDkm + QTDbateria * 500 + QTDalicate * 500 + QTDoleo * 1000 + QTDchave * 2000+ ReparoFora * 500;
+    const result2 = QTDlockpick * 600 + QTDflipper * 1500 + QTDkit * 1000 + QTDkm  + QTDbateria * 500 + QTDalicate * 500 + QTDoleo * 1000 + QTDchave * 2000 + ReparoFora * 500 + QTDpneu * 500;
     const result = result1 + result2;
 
     // Agora, valorMaoDeObra será 30% do result
@@ -200,7 +204,7 @@ export default function Home() {
     e.preventDefault();
 
   const result3 = formData.quantidade * formData.tipo;
-  const result4 = formData.QTDlockpick * 600 + formData.QTDflipper * 1500 + formData.QTDkit * 1000 + formData.QTDkm + formData.QTDbateria * 500 + formData.QTDalicate * 500 + formData.QTDoleo * 1000 + formData.QTDchave * 2000 + formData.ReparoFora * 500;
+  const result4 = formData.QTDlockpick * 600 + formData.QTDflipper * 1500 + formData.QTDkit * 1000 + formData.QTDkm + formData.QTDbateria * 500 + formData.QTDalicate * 500 + formData.QTDoleo * 1000 + formData.QTDchave * 2000 + formData.ReparoFora * 500 + formData.QTDpneu * 500;
   const resultTotal = result3 + result4;
   const valorMaoDeObraAprendiz = resultTotal * 0.45;
 
@@ -277,7 +281,7 @@ export default function Home() {
   
 
   const result3 = formData.quantidade * formData.tipo;
-  const result4 = formData.QTDlockpick * 600 + formData.QTDflipper * 1500 + formData.QTDkit * 1000 + formData.QTDkm + formData.QTDbateria * 500 + formData.QTDalicate * 500 + formData.QTDoleo * 1000 + formData.QTDchave * 2000 + formData.ReparoFora * 500;
+  const result4 = formData.QTDlockpick * 600 + formData.QTDflipper * 1500 + formData.QTDkit * 1000 + formData.QTDkm + formData.QTDbateria * 500 + formData.QTDalicate * 500 + formData.QTDoleo * 1000 + formData.QTDchave * 2000 + formData.ReparoFora * 500 + formData.QTDpneu * 500;
   const resultTotal = result3 + result4;
   const valorMaoDeObraAprendiz = resultTotal * 0.45;
 
@@ -512,6 +516,21 @@ export default function Home() {
                     id="filled-number"
                     label="QTD Bateria"
                     name="QTDbateria"
+                    type="number"
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    variant="standard"
+                  />
+                </FormControl>
+
+                <FormControl sx={{ m: 1, width: '20ch' }}>
+                  <TextField
+                    value={QTDpneu}
+                    onChange={handleQTDpneuChange}
+                    id="filled-number"
+                    label="QTD de pneu"
+                    name="QTDpneu"
                     type="number"
                     InputLabelProps={{
                       shrink: true,

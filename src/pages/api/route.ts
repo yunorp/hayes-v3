@@ -14,6 +14,7 @@ type SheetForm = {
   QTDkit: number;
   QTDoleo: number;
   QTDbateria: number;
+  QTDpneu: number;
   ReparoFora: number;
   valorEmpresa: number;
   valorMaoDeObra: number;
@@ -73,6 +74,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
               body.QTDkit,
               body.QTDoleo,
               body.QTDbateria,
+              body.QTDpneu,
               body.ReparoFora,
               body.result,
               body.valorMaoDeObra,
