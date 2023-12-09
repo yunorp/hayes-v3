@@ -16,7 +16,8 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Divider from '@mui/material/Divider';
 import { purple,yellow,green,blue } from '@mui/material/colors';
 import { NextApiResponse } from 'next';
-import Head from 'next/head'
+import Head from 'next/head';
+import { useEffect } from 'react';
 
 export default function Home() {
 
@@ -26,9 +27,31 @@ export default function Home() {
   const [value2, setValue2] = React.useState<number>(0);
   const [QTDlockpick, setQTDlockpick] = React.useState<number>(0);
   const [QTDflipper, setQTDflipper] = React.useState<number>(0);
-  const [QTDferramenta, setQTDferramenta] = React.useState<number>(0);
+  const [QTDkit, setQTDkit] = React.useState<number>(0);
+  const [QTDchave, setQTDchave] = React.useState<number>(0);
+  const [QTDalicate, setQTDalicate] = React.useState<number>(0);
+  const [QTDoleo, setQTDoleo] = React.useState<number>(0);
+  const [QTDbateria, setQTDbateria] = React.useState<number>(0);
+  const [ReparoFora, setReparoFora] = React.useState<number>(0);
   const [QTDkm, setQTDkm] = React.useState<number>(0);
+  const [desgastado, setDesgastado] = React.useState<number>(1);
+  React.useEffect(() => {
+    setPeçaD(calculatePeçaD(desgastado));
+    setPeçaC(calculatePeçaC(desgastado));
+  }, [desgastado]);
 
+  const calculatePeçaD = (desgastado: number) => {
+    return desgastado === 1 ? 900 : 1500;
+  };
+
+  const calculatePeçaC = (desgastado: number) => {
+    // Adjust the calculation logic for other menu items as needed
+    return desgastado === 1 ? 1100 : 1700;
+  };
+
+
+  const [peçaD, setPeçaD] = React.useState<number>(calculatePeçaD(desgastado));
+  const [peçaC, setPeçaC] = React.useState<number>(calculatePeçaC(desgastado));
   
   //const [result, setResult] = React.useState<number>(0);
 
@@ -45,7 +68,7 @@ export default function Home() {
     const { name, value } = e.target;
   
     // Verifica se o campo deve ser tratado como número
-    const updatedValue = ['tipo', 'quantidade', 'result', 'QTDlockpick', 'QTDflipper', 'QTDferramenta', 'QTDkm'].includes(name)
+    const updatedValue = ['tipo', 'quantidade', 'result', 'QTDlockpick', 'QTDflipper', 'QTDkit', 'QTDkm', 'QTDalicate', 'QTDbateria','QTDoleo','ReparoFora','QTDchave'].includes(name)
       ? parseFloat(value)
       : value;
   
@@ -54,9 +77,9 @@ export default function Home() {
   
   // Movendo os cálculos para dentro da função updateValores
   const result1 = value1 * value2;
-  const result2 = QTDlockpick * 600 + QTDflipper * 1500 + QTDferramenta * 300 + QTDkm * 90;
+  const result2 = QTDlockpick * 600 + QTDflipper * 1500 + QTDkit * 0 + QTDkm  + QTDbateria * 0 + QTDalicate * 500 + QTDoleo * 1000 + QTDchave * 2000 + ReparoFora * 500;
   const result = result1 + result2;
-  const valorAprendiz = result * 0.40;
+  const valorAprendiz = result * 0.45;
   const valorMaquinaAprendiz = result - valorAprendiz;
   const valorMaoAprendiz = result - valorMaquinaAprendiz;
 
@@ -65,7 +88,6 @@ export default function Home() {
   console.log('Debug updateValores:');
   console.log('QTDlockpick:', QTDlockpick);
   console.log('QTDflipper:', QTDflipper);
-  console.log('QTDferramenta:', QTDferramenta);
   console.log('QTDkm:', QTDkm);
   console.log('result:', result);
   console.log('valorAprendiz:', valorAprendiz);
@@ -80,14 +102,20 @@ export default function Home() {
     custumizador: '',
     tipo: 0,
     quantidade: 0,
+    desgastado: 1,
     QTDlockpick: 0,
     QTDflipper: 0,
-    QTDferramenta: 0,
+    QTDchave: 0,
+    QTDalicate: 0,
+    QTDkit: 0,
+    QTDoleo: 0,
+    QTDbateria: 0,
+    ReparoFora: 0,
     QTDkm: 0,
     valorEmpresa: 0,
     valorMaoDeObra: 0,
     result: 0,
-    role: 'Mecânico'
+    role: 'Aprendiz'
     
   });
 
@@ -97,9 +125,17 @@ export default function Home() {
   };
 
   const handleNumero2Change = (e: SelectChangeEvent) => {
-    setValue2(Number(e.target.value));
+    const tipoValue = Number(e.target.value);
+    setValue2(tipoValue);
+    setFormData((prevData) => ({ ...prevData, tipo: tipoValue }));
   };
-  
+
+  const handleDesgastadoChange = (e: SelectChangeEvent) => {
+    const newDesgastado = Number(e.target.value);
+    setDesgastado(newDesgastado);
+  };
+
+
   const handleNumero1Change = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue1(Number(e.target.value));
   };
@@ -113,21 +149,44 @@ export default function Home() {
     setQTDflipper(Number(e.target.value));
   };
   
-  const handleQTDferramentaChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setQTDferramenta(Number(e.target.value));
+  const handleQTDkitChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setQTDkit(Number(e.target.value));
   };
+
+  const handleQTDchaveChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setQTDchave(Number(e.target.value));
+  };
+
+  const handleQTDalicateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setQTDalicate(Number(e.target.value));
+  };
+
+  const handleQTDoleoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setQTDoleo(Number(e.target.value));
+  };
+
+  const handleReparoForaChange = (e: SelectChangeEvent) => {
+    setReparoFora(Number(e.target.value));
+  };
+
+  const handleQTDbateriaChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setQTDbateria(Number(e.target.value));
+  };
+
+
   
-  const handleQTDkmChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  
+  const handleQTDkmChange = (e: SelectChangeEvent) => {
     setQTDkm(Number(e.target.value));
   };
 
   const updateValores = (tipo: number, quantidade: number) => {
-    const result1 = value1 * value2;
-    const result2 = QTDlockpick * 600 + QTDflipper * 1500 + QTDferramenta * 300 + QTDkm * 90;
+    const result1 = value1 * formData.tipo;
+    const result2 = QTDlockpick * 600 + QTDflipper * 1500 + QTDkit * 0 + QTDkm + QTDbateria * 0 + QTDalicate * 500 + QTDoleo * 1000 + QTDchave * 2000+ ReparoFora * 500;
     const result = result1 + result2;
 
     // Agora, valorMaoDeObra será 30% do result
-    const valorMaoDeObra = result * 0.40;
+    const valorMaoDeObra = result * 0.45;
 
     setFormData({
       ...formData,
@@ -140,22 +199,28 @@ export default function Home() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const result3 = formData.quantidade * formData.tipo;
-  var result4=0;
-  result4 = formData.QTDlockpick * 600 + formData.QTDflipper * 1500 + formData.QTDferramenta * 300 + formData.QTDkm * 90;
+  const result3 = formData.quantidade * formData.tipo;
+  const result4 = formData.QTDlockpick * 600 + formData.QTDflipper * 1500 + formData.QTDkit * 0 + formData.QTDkm + formData.QTDbateria * 0 + formData.QTDalicate * 500 + formData.QTDoleo * 1000 + formData.QTDchave * 2000 + formData.ReparoFora * 500;
   const resultTotal = result3 + result4;
-  const valorMaoDeObraAprendiz = resultTotal * 0.40;
+  const valorMaoDeObraAprendiz = resultTotal * 0.45;
 
   formData.custumizador = vendedor;
   formData.quantidade = value1;
   formData.tipo = value2;
+  formData.desgastado = desgastado;
   formData.QTDlockpick = QTDlockpick;
-  formData.QTDferramenta = QTDferramenta;
+  formData.QTDkit = QTDkit;
+  formData.QTDalicate= QTDalicate;
+  formData.QTDchave = QTDchave;
+  formData.QTDoleo = QTDoleo;
+  formData.QTDbateria = QTDbateria;
+  formData.ReparoFora = ReparoFora;
   formData.QTDkm = QTDkm;
   formData.QTDflipper = QTDflipper;
   formData.result = resultTotal;
   formData.valorMaoDeObra = valorMaoDeObraAprendiz;
   formData.valorEmpresa = resultTotal - valorMaoDeObraAprendiz;
+
     
   
     // Remova as linhas que definem formData.result, formData.tipo e formData.quantidade aqui.
@@ -212,16 +277,21 @@ export default function Home() {
   
 
   const result3 = formData.quantidade * formData.tipo;
-  var result4=0;
-  result4 = formData.QTDlockpick * 600 + formData.QTDflipper * 1500 + formData.QTDferramenta * 300 + formData.QTDkm * 90;
+  const result4 = formData.QTDlockpick * 600 + formData.QTDflipper * 1500 + formData.QTDkit * 0 + formData.QTDkm + formData.QTDbateria * 0 + formData.QTDalicate * 500 + formData.QTDoleo * 1000 + formData.QTDchave * 2000 + formData.ReparoFora * 500;
   const resultTotal = result3 + result4;
-  const valorMaoDeObraAprendiz = resultTotal * 0.40;
+  const valorMaoDeObraAprendiz = resultTotal * 0.45;
 
   formData.custumizador = vendedor;
   formData.quantidade = value1;
   formData.tipo = value2;
+  formData.desgastado = desgastado;
   formData.QTDlockpick = QTDlockpick;
-  formData.QTDferramenta = QTDferramenta;
+  formData.QTDkit = QTDkit;
+  formData.QTDalicate= QTDalicate;
+  formData.QTDchave = QTDchave;
+  formData.QTDoleo = QTDoleo;
+  formData.QTDbateria = QTDbateria;
+  formData.ReparoFora = ReparoFora;
   formData.QTDkm = QTDkm;
   formData.QTDflipper = QTDflipper;
   formData.result = resultTotal;
@@ -265,6 +335,10 @@ export default function Home() {
       const [myData, setMyData] = React.useState<number>(0);
 
       
+      const handleMenuItemClick = (value: number) => {
+        setValue2(value);
+      };
+      
 
   return (
       
@@ -285,11 +359,26 @@ export default function Home() {
                           value={formData.custumizador}
                           onChange={handleVendedorChange}
                           id="filled-number"
-                          label="Nome do Customizador"
+                          label="Nome do Mêcanico"
                           name='custumizador'
                           type="text"
                           variant="standard"
                         />
+                </FormControl>
+                <FormControl variant='standard' sx={{ m: 1, width: '20ch' }}>
+                  <InputLabel id="demo-simple-select-label">Peças degastadas?</InputLabel>
+                  <Select
+                    type='number'
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    onChange={handleDesgastadoChange}
+                    value={String(desgastado)}
+                    name="desgastado"
+                    label="Peças desgastadas"                    
+                  >
+                    <MenuItem value={0}>Sim</MenuItem>
+                    <MenuItem value={1}>Não</MenuItem>      
+                  </Select>
                 </FormControl>
                 <FormControl variant='standard' sx={{ m: 1, width: '20ch' }}>
                   <InputLabel id="demo-simple-select-label">Tipo</InputLabel>
@@ -300,17 +389,16 @@ export default function Home() {
                     onChange={handleNumero2Change}
                     value={String(value2)}
                     name="tipo"
-                    label="Age"
-                    
+                    label="Age"                    
                   >
                     <strong> CARRO </strong> 
-                    <MenuItem value={275}>D</MenuItem>
-                    <MenuItem value={325}>C</MenuItem>
-                    <MenuItem value={375}>B</MenuItem>
-                    <MenuItem value={425}>A</MenuItem>
-                    <MenuItem value={475}>S</MenuItem>  
+                    <MenuItem value={desgastado === 1 ? 900 : 1500}>D</MenuItem>
+                    <MenuItem value={desgastado === 1 ? 1100 : 1700}>C</MenuItem>
+                    <MenuItem value={desgastado === 1 ? 1300 : 2300}>B</MenuItem>
+                    <MenuItem value={desgastado === 1 ? 1500 : 2700}>A</MenuItem>
+                    <MenuItem value={desgastado === 1 ? 1700 : 3200}>S</MenuItem>
                     <strong> MOTO </strong>   
-                    <MenuItem value={326}>M</MenuItem>       
+                    <MenuItem value={desgastado === 1 ? 1000 : 1600}>M</MenuItem>      
                   </Select>
                 </FormControl>
                 <FormControl sx={{ m: 1, width: '20ch' }}>
@@ -327,6 +415,7 @@ export default function Home() {
                       variant="standard"
                     />
                 </FormControl>
+                
                 <FormControl sx={{ m: 1, width: '20ch' }}>
                   <TextField
                     value={QTDlockpick}
@@ -359,11 +448,25 @@ export default function Home() {
 
                 <FormControl sx={{ m: 1, width: '20ch' }}>
                   <TextField
-                    value={QTDferramenta}
-                    onChange={handleQTDferramentaChange}
+                    value={QTDkit}
+                    onChange={handleQTDkitChange}
                     id="filled-number"
-                    label="QTD Ferramenta"
-                    name="QTDferramenta"
+                    label="QTD kit reparo"
+                    name="QTDkit"
+                    type="number"
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    variant="standard"
+                  />
+                </FormControl>
+                <FormControl sx={{ m: 1, width: '20ch' }}>
+                  <TextField
+                    value={QTDoleo}
+                    onChange={handleQTDoleoChange}
+                    id="filled-number"
+                    label="QTD Oleo"
+                    name="QTDoleo"
                     type="number"
                     InputLabelProps={{
                       shrink: true,
@@ -374,11 +477,11 @@ export default function Home() {
 
                 <FormControl sx={{ m: 1, width: '20ch' }}>
                   <TextField
-                    value={QTDkm}
-                    onChange={handleQTDkmChange}
+                    value={QTDchave}
+                    onChange={handleQTDchaveChange}
                     id="filled-number"
-                    label="QTD Km"
-                    name="QTDkm"
+                    label="QTD Chave de fenda"
+                    name="QTDkit"
                     type="number"
                     InputLabelProps={{
                       shrink: true,
@@ -386,13 +489,85 @@ export default function Home() {
                     variant="standard"
                   />
                 </FormControl>
+
+                <FormControl sx={{ m: 1, width: '20ch' }}>
+                  <TextField
+                    value={QTDalicate}
+                    onChange={handleQTDalicateChange}
+                    id="filled-number"
+                    label="QTD Alicate"
+                    name="QTDalicate"
+                    type="number"
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    variant="standard"
+                  />
+                </FormControl>
+
+                <FormControl sx={{ m: 1, width: '20ch' }}>
+                  <TextField
+                    value={QTDbateria}
+                    onChange={handleQTDbateriaChange}
+                    id="filled-number"
+                    label="QTD Bateria"
+                    name="QTDbateria"
+                    type="number"
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    variant="standard"
+                  />
+                </FormControl>
+
+                
+                
+
+                <FormControl variant='standard' sx={{ m: 1, width: '20ch' }}>
+                  <InputLabel id="demo-simple-select-label">Teve Guincho?</InputLabel>
+                  <Select
+                    type='number'
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    onChange={handleQTDkmChange}
+                    value={String(QTDkm)}
+                    name="ReparoFora"
+                    label="Teve reparo fora da mecanica?"                    
+                  >
+                    <MenuItem value={0}>Não Teve</MenuItem>
+                    <MenuItem value={500}>Sul</MenuItem>
+                    <MenuItem value={700}>Sandy</MenuItem> 
+                    <MenuItem value={1000}>Paleto</MenuItem>        
+                  </Select>
+                </FormControl>
+
+                <FormControl variant='standard' sx={{ m: 1, width: '20ch' }}>
+                  <InputLabel id="demo-simple-select-label">Teve reparo fora da mecanica?</InputLabel>
+                  <Select
+                    type='number'
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    onChange={handleReparoForaChange}
+                    value={String(ReparoFora)}
+                    name="ReparoFora"
+                    label="Teve reparo fora da mecanica?"                    
+                  >
+                    <MenuItem value={1}>Sim</MenuItem>
+                    <MenuItem value={0}>Não</MenuItem>      
+                  </Select>
+                </FormControl>
                   <div className={styles.boxInputs2}>              
                     <input value={formData.result} type="hidden" name="result" id="" />
                     <input value={formData.quantidade} type="hidden" name="quantidade" id="" />
                     <input value={formData.tipo} type="hidden" name="tipo" id="" />
                     <input value={QTDlockpick} type="hidden" name="QTDlockpick" id="" />
                     <input value={QTDflipper} type="hidden" name="QTDflipper" id="" />
-                    <input value={QTDferramenta} type="hidden" name="QTDferramenta" id="" />
+                    <input value={QTDalicate} type="hidden" name="QTDalicate" id="" />
+                    <input value={QTDchave} type="hidden" name="QTDchave" id="" />
+                    <input value={QTDoleo} type="hidden" name="QTDoleo" id="" />
+                    <input value={QTDbateria} type="hidden" name="QTDbateria" id="" />
+                    <input value={ReparoFora} type="hidden" name="ReparoFora" id="" />
+                    <input value={QTDkit} type="hidden" name="QTDkit" id="" />
                     <input value={QTDkm} type="hidden" name="QTDkm" id="" />
                   </div>   
                   <div className={styles.btnBox}>
@@ -412,7 +587,7 @@ export default function Home() {
                           color: blue[500],
                           position: 'relative',
                           bottom: '-5px',
-                          right: '15%',
+                          right: '10%',
                           marginLeft: '-12px',
                         }}
                       />
@@ -424,7 +599,7 @@ export default function Home() {
           <section className={styles.sectionTotal}>
               <div className={styles.boxTotal}>
                 <div>
-                  <h1>MECÂNICO</h1>
+                  <h1>MÊCANICO</h1>
                   <h2>VALOR TOTAL</h2>
                 </div> 
                 <div>

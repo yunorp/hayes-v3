@@ -18,14 +18,12 @@
     --background-end-rgb: 0, 0, 0;
   }
 }
-
-body {
-
+body > div{
+  width: 95%;
 }
-
 body {
   color: rgb(var(--foreground-rgb));
-  background: url(../../public/hayes-bg.png) rgb(255, 255, 255);
+  background: url(../../public/hayes-bg.png) white;
   background-size: contain;
   background-repeat: no-repeat;
   background-position: top;

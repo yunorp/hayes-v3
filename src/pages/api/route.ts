@@ -5,10 +5,16 @@ type SheetForm = {
   custumizador: string;
   tipo: number;
   quantidade: number;
+  desgastado: number;
   QTDlockpick: number;
   QTDflipper: number;
-  QTDferramenta: number;
   QTDkm: number;
+  QTDchave: number;
+  QTDalicate: number;
+  QTDkit: number;
+  QTDoleo: number;
+  QTDbateria: number;
+  ReparoFora: number;
   valorEmpresa: number;
   valorMaoDeObra: number;
   result: number;
@@ -56,15 +62,22 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           values: [
             [
               body.custumizador,
-              `=IFS(${body.tipo}=0;"Nenhuma";${body.tipo}=475;"S";${body.tipo}=425;"A";${body.tipo}=375;"B";${body.tipo}=325;"C";${body.tipo}=275;"D";${body.tipo}=326;"M")`,
+              `=IFS(${body.tipo}=0;"Nenhuma";${body.tipo}=1700;"S";${body.tipo}=3200;"S";${body.tipo}=1500;"A";${body.tipo}=2700;"A";${body.tipo}=1300;"B";${body.tipo}=2300;"B";${body.tipo}=1100;"C";${body.tipo}=1700;"C";${body.tipo}=900;"D";${body.tipo}=1500;"D";${body.tipo}=1000;"M";${body.tipo}=1600;"M")`,
               body.quantidade,
+              `=IFS(${body.desgastado} = 0;"Sim"; ${body.desgastado} = 1;"Não")`,
               body.QTDlockpick,
               body.QTDflipper,
-              body.QTDferramenta,
-              body.QTDkm,
+              `=IFS(${body.QTDkm} = 0;"Não Teve"; ${body.QTDkm} = 500;"Sul"; ${body.QTDkm} = 700;"Sandy Shores"; ${body.QTDkm} = 1000;"Paleto")`,
+              body.QTDchave,
+              body.QTDalicate,
+              body.QTDkit,
+              body.QTDoleo,
+              body.QTDbateria,
+              body.ReparoFora,
               body.result,
               body.valorMaoDeObra,
               body.role,
+
             ],
           ],
         },
