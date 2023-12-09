@@ -115,7 +115,7 @@ export default function Home() {
     valorEmpresa: 0,
     valorMaoDeObra: 0,
     result: 0,
-    role: 'Aprendiz'
+    role: 'Mêcanico'
     
   });
 
