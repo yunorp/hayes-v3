@@ -182,7 +182,7 @@ export default function Home() {
 
   const updateValores = (tipo: number, quantidade: number) => {
     const result1 = value1 * formData.tipo;
-    const result2 = QTDlockpick * 600 + QTDflipper * 1500 + QTDkit * 0 + QTDkm + QTDbateria * 0 + QTDalicate * 500 + QTDoleo * 1000 + QTDchave * 2000+ ReparoFora * 500;
+    const result2 = QTDlockpick * 600 + QTDflipper * 1500 + QTDkit * 1000 + QTDkm + QTDbateria * 500 + QTDalicate * 500 + QTDoleo * 1000 + QTDchave * 2000+ ReparoFora * 500;
     const result = result1 + result2;
 
     // Agora, valorMaoDeObra será 30% do result
