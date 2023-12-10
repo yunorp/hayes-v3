@@ -257,7 +257,7 @@ export default function Home() {
         console.log(content);
         alert('Pedido registrado com sucesso!!');
         setSuccess(true);
-
+        window.location.reload();
         setTimeout(function(){
           setSuccess(false)// you can pass true to reload function to ignore the client cache and reload from the server
       },2000);
