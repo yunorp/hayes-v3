@@ -63,7 +63,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           values: [
             [
               body.custumizador,
-              `=IFS(${body.tipo}=0;"Nenhuma";${body.tipo}=1700;"S";${body.tipo}=3200;"S";${body.tipo}=1500;"A";${body.tipo}=2700;"A";${body.tipo}=1300;"B";${body.tipo}=2300;"B";${body.tipo}=1100;"C";${body.tipo}=1700;"C";${body.tipo}=900;"D";${body.tipo}=1500;"D";${body.tipo}=1000;"M";${body.tipo}=1600;"M")`,
+              `=IFS(${body.tipo}=0;"Nenhuma";${body.tipo}=1700;"S";${body.tipo}=3200;"S";${body.tipo}=1500;"A";${body.tipo}=2700;"A";${body.tipo}=1300;"B";${body.tipo}=2300;"B";${body.tipo}=1100;"C";${body.tipo}=1700;"C";${body.tipo}=901;"D";${body.tipo}=1501;"D";${body.tipo}=900;"M";${body.tipo}=1500;"M")`,
               body.quantidade,
               `=IFS(${body.desgastado} = 0;"Sim"; ${body.desgastado} = 1;"Não")`,
               body.QTDlockpick,
