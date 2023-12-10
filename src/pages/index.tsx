@@ -111,6 +111,7 @@ export default function Home() {
     QTDkit: 0,
     QTDoleo: 0,
     QTDbateria: 0,
+    QTDpneu: 0,
     ReparoFora: 0,
     QTDkm: 0,
     valorEmpresa: 0,
