@@ -219,6 +219,7 @@ export default function Home() {
   formData.QTDchave = QTDchave;
   formData.QTDoleo = QTDoleo;
   formData.QTDbateria = QTDbateria;
+  formData.QTDpneu = QTDpneu;
   formData.ReparoFora = ReparoFora;
   formData.QTDkm = QTDkm;
   formData.QTDflipper = QTDflipper;
