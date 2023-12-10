@@ -69,7 +69,7 @@ export default function Home() {
     const { name, value } = e.target;
   
     // Verifica se o campo deve ser tratado como número
-    const updatedValue = ['tipo', 'quantidade', 'result', 'QTDlockpick', 'QTDflipper', 'QTDkit', 'QTDkm', 'QTDalicate', 'QTDbateria','QTDoleo','ReparoFora','QTDchave','QTDpneu'].includes(name)
+    const updatedValue = ['tipo', 'quantidade', 'result', 'QTDlockpick', 'QTDflipper', 'QTDkit', 'QTDkm', 'QTDalicate', 'QTDbateria','QTDoleo','ReparoFora','QTDchave'].includes(name)
       ? parseFloat(value)
       : value;
   
@@ -297,6 +297,7 @@ export default function Home() {
   formData.QTDchave = QTDchave;
   formData.QTDoleo = QTDoleo;
   formData.QTDbateria = QTDbateria;
+  formData.QTDpneu = QTDpneu;
   formData.ReparoFora = ReparoFora;
   formData.QTDkm = QTDkm;
   formData.QTDflipper = QTDflipper;
