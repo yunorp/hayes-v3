@@ -192,7 +192,6 @@
 
     }
     .sectionTotal{
-        width: 100%!important;
         display: flex!important;
         justify-content: start;
         position:fixed;

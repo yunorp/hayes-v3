@@ -16,6 +16,7 @@ type SheetForm = {
   QTDbateria: number;
   QTDpneu: number;
   ReparoFora: number;
+  QTDcinto: number;
   valorEmpresa: number;
   valorMaoDeObra: number;
   result: number;
@@ -46,8 +47,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       });
 
       // Verificar se a aba (sheet) já existe
-      const sheetExists = await doesSheetExist(sheets, '1OZ-Pc8lCRo-uvtihH-f8ctLjsqjxOCsVkK3swDe20ZQ', body.custumizador);
-      console.log(`TESTEEEEEEEE: ${body.valorMaoDeObra}`)
+      const sheetExists = await doesSheetExist(sheets, '1OZ-Pc8lCRo-uvtihH-f8ctLjsqjxOCsVkK3swDe20ZQ',body.custumizador);
       if (!sheetExists) {
         // Se a aba não existir, criar uma nova
         return res.status(400).json({ error: 'A aba não existe. Por favor, crie uma nova aba.' });
@@ -76,6 +76,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
               body.QTDbateria,
               body.QTDpneu,
               body.ReparoFora,
+              body.QTDcinto,
               body.result,
               body.valorMaoDeObra,
               body.role,
