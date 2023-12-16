@@ -20,7 +20,6 @@ type SheetForm = {
   valorEmpresa: number;
   valorMaoDeObra: number;
   result: number;
-  role: string;
 };
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -79,8 +78,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
               body.QTDcinto,
               body.result,
               body.valorMaoDeObra,
-              body.role,
-
             ],
           ],
         },

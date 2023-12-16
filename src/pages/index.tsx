@@ -123,9 +123,7 @@ export default function Home() {
     QTDcinto: 0,
     valorEmpresa: 0,
     valorMaoDeObra: 0,
-    result: 0,
-    role: 'Mêcanico'
-    
+    result: 0,    
   });
 
   console.log({formData})
