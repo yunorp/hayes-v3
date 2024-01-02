@@ -23,10 +23,10 @@ body > div{
 }
 body {
   color: rgb(var(--foreground-rgb));
-  background: url(../../public/hayes-bg.png) white;
-  background-size: contain;
+  background: url(../../public/strokemaster.png) black;
+  background-size: 1000px;
   background-repeat: no-repeat;
-  background-position: top;
+  background-position: center;
 
 
   display: flex;

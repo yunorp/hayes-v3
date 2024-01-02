@@ -3,23 +3,22 @@ import { google } from 'googleapis';
 
 type SheetForm = {
   custumizador: string;
-  tipo: number;
-  quantidade: number;
-  desgastado: number;
-  QTDlockpick: number;
-  QTDflipper: number;
-  QTDkm: number;
-  QTDchave: number;
-  QTDalicate: number;
-  QTDkit: number;
-  QTDoleo: number;
-  QTDbateria: number;
-  QTDpneu: number;
-  ReparoFora: number;
-  QTDcinto: number;
+  Motor: number;
+  Freio: number;
+  Suspensao: number;
+  Transmissao: number;
+  Turbo: number;
+  OilPump: number;
+  DriveShaft: number;
+  CylinderHead: number;
+  BatteryCables: number;
+  FuelTank : number;
+  DriftTires: number;
+  QTDdesconto: number;
   valorEmpresa: number;
   valorMaoDeObra: number;
   result: number;
+  cargo: number;
 };
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -46,42 +45,66 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       });
 
       // Verificar se a aba (sheet) já existe
-      const sheetExists = await doesSheetExist(sheets, '1OZ-Pc8lCRo-uvtihH-f8ctLjsqjxOCsVkK3swDe20ZQ',body.custumizador);
+      const sheetExists = await doesSheetExist(sheets, '10gX8HvkpjGkNUFyKENdAetO8WqsHO3ZJooFCusG9dec',body.custumizador);
       if (!sheetExists) {
         // Se a aba não existir, criar uma nova
         return res.status(400).json({ error: 'A aba não existe. Por favor, crie uma nova aba.' });
       }
 
+      const getStatus = (value: number): string => {
+        return value === 0 ? 'Não Teve' : value === 1 ? 'Teve' : 'Status Indefinido';
+      };
+      const getStatusDesconto = (value: number): string => {
+        return value === 1 ? 'Não Teve' : value === 0.10 ? '10%' : value === 0.15 ? '15%' : value === 0.20 ? '20%' : value === 0.50 ? '50%' : 'Status Indefinido';
+      };
+      const motorStatus = getStatus(body.Motor);
+      const freioStatus = getStatus(body.Freio);
+      const suspensaoStatus = getStatus(body.Suspensao);
+      const transmissaoStatus = getStatus(body.Transmissao);
+      const turboStatus = getStatus(body.Turbo);
+      const oilPumpStatus = getStatus(body.OilPump);
+      const driveShaftStatus = getStatus(body.DriveShaft);
+      const cylinderHeadStatus = getStatus(body.CylinderHead);
+      const batteryCableStatus = getStatus(body.BatteryCables);
+      const fuelTankStatus = getStatus(body.FuelTank);
+      const driftTiresStatus = getStatus(body.DriftTires);
+      const descontoStatus = getStatusDesconto(body.QTDdesconto);
+      const valorEmpresaStatus = getStatus(body.valorEmpresa);
+      const valorMaoDeObraStatus = getStatus(body.valorMaoDeObra);
+      const resultStatus = getStatus(body.result);
 
-      // Adicionar os dados à planilha
-      const response = await sheets.spreadsheets.values.append({
-        spreadsheetId: process.env.GOOGLE_SHEET_ID,
-        range: `${body.custumizador}!A1:J1`,
-        valueInputOption: 'USER_ENTERED',
-        requestBody: {
-          values: [
-            [
-              body.custumizador,
-              `=IFS(${body.tipo}=0;"Nenhuma";${body.tipo}=1700;"S";${body.tipo}=3200;"S";${body.tipo}=1500;"A";${body.tipo}=2700;"A";${body.tipo}=1300;"B";${body.tipo}=2300;"B";${body.tipo}=1100;"C";${body.tipo}=1700;"C";${body.tipo}=901;"D";${body.tipo}=1501;"D";${body.tipo}=900;"M";${body.tipo}=1500;"M")`,
-              body.quantidade,
-              `=IFS(${body.desgastado} = 0;"Sim"; ${body.desgastado} = 1;"Não")`,
-              body.QTDlockpick,
-              body.QTDflipper,
-              `=IFS(${body.QTDkm} = 0;"Não Teve"; ${body.QTDkm} = 500;"Sul"; ${body.QTDkm} = 700;"Sandy Shores"; ${body.QTDkm} = 1000;"Paleto")`,
-              body.QTDchave,
-              body.QTDalicate,
-              body.QTDkit,
-              body.QTDoleo,
-              body.QTDbateria,
-              body.QTDpneu,
-              body.ReparoFora,
-              body.QTDcinto,
-              body.result,
-              body.valorMaoDeObra,
-            ],
-          ],
-        },
-      });
+      const values = [
+        [
+          body.custumizador,
+          `
+          Motor: ${motorStatus},
+          Freio: ${freioStatus},
+          Suspensão: ${suspensaoStatus},
+          Transmissao: ${transmissaoStatus},
+          Turbo: ${turboStatus},
+          OilPump: ${oilPumpStatus},
+          DriveShaft: ${driveShaftStatus},
+          CylinderHead: ${cylinderHeadStatus},
+          BatteryCable: ${batteryCableStatus},
+          FuelTank: ${fuelTankStatus},
+          DriftTires: ${driftTiresStatus},
+          desconto: ${descontoStatus},
+          `,
+          body.valorEmpresa,
+          body.valorMaoDeObra,
+          body.result,
+          `=IFS(${body.cargo}=0.13;"Aprendiz";${body.cargo}=0.17;"Mecânico";${body.cargo}=0.22;"Estoquista";${body.cargo}=0.30;"Gerente")`
+        ],
+      ];
+
+    const response = await sheets.spreadsheets.values.append({
+      spreadsheetId: process.env.GOOGLE_SHEET_ID,
+      range: `${body.custumizador}!A1:E1`, // Ajuste a quantidade de colunas conforme necessário
+      valueInputOption: 'USER_ENTERED',
+      requestBody: {
+        values: values,
+      },
+    });
 
       console.log('Resposta da API:', response.data);
 
