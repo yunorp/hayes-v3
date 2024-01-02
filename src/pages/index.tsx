@@ -8,51 +8,55 @@ import Select from '@mui/material/Select';
 import { SelectChangeEvent } from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import Switch from '@mui/material/Switch';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
+import { alpha,styled } from '@mui/material/styles';
 import CircularProgress from '@mui/material/CircularProgress';
 import Divider from '@mui/material/Divider';
-import { purple,yellow,green,blue,red } from '@mui/material/colors';
+import { purple,yellow,green,blue } from '@mui/material/colors';
+import { NextApiResponse } from 'next';
 import Head from 'next/head';
 import { useEffect } from 'react';
-import Checkbox from '@mui/material/Checkbox';
-import Box from '@mui/material/Box';
-import FormLabel from '@mui/material/FormLabel';
-import FormGroup from '@mui/material/FormGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormHelperText from '@mui/material/FormHelperText';
 
 export default function Home() {
 
-  const [Motor, setMotor] = React.useState<number>(0);
-  const [Freio, setFreio] = React.useState<number>(0);
-  const [Suspensao, setSuspensao] = React.useState<number>(0);
-  const [Transmissao, setTransmissao] = React.useState<number>(0);
-  const [Turbo, setTurbo] = React.useState<number>(0);
-  const [OilPump, setOilPump] = React.useState<number>(0);
-  const [DriveShaft, setDriveShaft] = React.useState<number>(0);
-  const [CylinderHead, setCylinderHead] = React.useState<number>(0);
-  const [BatteryCables, setBatteryCables] = React.useState<number>(0);
-  const [FuelTank, setFuelTank] = React.useState<number>(0);
-  const [DriftTires, setDriftTires] = React.useState<number>(0);
+  
+
+  const [value1, setValue1] = React.useState<number>(0);
+  const [value2, setValue2] = React.useState<number>(0);
+  const [QTDlockpick, setQTDlockpick] = React.useState<number>(0);
+  const [QTDflipper, setQTDflipper] = React.useState<number>(0);
+  const [QTDkit, setQTDkit] = React.useState<number>(0);
+  const [QTDchave, setQTDchave] = React.useState<number>(0);
+  const [QTDalicate, setQTDalicate] = React.useState<number>(0);
+  const [QTDoleo, setQTDoleo] = React.useState<number>(0);
+  const [QTDpneu, setQTDpneu] = React.useState<number>(0);
+  const [QTDbateria, setQTDbateria] = React.useState<number>(0);
+  const [ReparoFora, setReparoFora] = React.useState<number>(0);
+  const [QTDkm, setQTDkm] = React.useState<number>(0);
   const [QTDdesconto, setQTDdesconto] = React.useState<number>(1);
-  const [cargo, setCargo] = React.useState<number>(0.17);
+  const [QTDcinto, setQTDcinto] = React.useState<number>(0);
+  const [desgastado, setDesgastado] = React.useState<number>(1);
+  React.useEffect(() => {
+    setPeçaD(calculatePeçaD(desgastado));
+    setPeçaC(calculatePeçaC(desgastado));
+  }, [desgastado]);
+
+  const calculatePeçaD = (desgastado: number) => {
+    return desgastado === 1 ? 900 : 1500;
+  };
+
+  const calculatePeçaC = (desgastado: number) => {
+    // Adjust the calculation logic for other menu items as needed
+    return desgastado === 1 ? 1100 : 1700;
+  };
+
+
+  const [peçaD, setPeçaD] = React.useState<number>(calculatePeçaD(desgastado));
+  const [peçaC, setPeçaC] = React.useState<number>(calculatePeçaC(desgastado));
   
   //const [result, setResult] = React.useState<number>(0);
-  interface CargoNomes {
-    0.13: string;
-    0.17: string;
-    0.22: string;
-    0.30: string;
-    [key: number]: string; // Adicionando a assinatura de índice
-  }
-  
-  const cargoNomes: CargoNomes = {
-    0.13: "APRENDIZ",
-    0.17: "MECÂNICO",
-    0.22: "ESTOQUISTA",
-    0.30: "GERENTE",
-  };
-  
-  const cargoNome: string = cargoNomes[cargo] || "Outro Cargo";
 
   const isFormValid = () => {
     return (
@@ -67,7 +71,7 @@ export default function Home() {
     const { name, value } = e.target;
   
     // Verifica se o campo deve ser tratado como número
-    const updatedValue = ['Motor', 'Freio', 'Suspensao', 'Transmissao', 'Turbo', 'OilPump', 'DriveShaft', 'CylinderHead', 'BatteryCables','FuelTank','DriftTires'].includes(name)
+    const updatedValue = ['tipo', 'quantidade', 'result', 'QTDlockpick', 'QTDflipper', 'QTDkit', 'QTDkm', 'QTDalicate', 'QTDbateria','QTDoleo','ReparoFora','QTDchave'].includes(name)
       ? parseFloat(value)
       : value;
   
@@ -75,24 +79,23 @@ export default function Home() {
   };
   
   // Movendo os cálculos para dentro da função updateValores
-  const result = Motor * 5000 + Freio * 6000 + Suspensao * 9000 + Transmissao * 8000  + Turbo * 10000 + OilPump * 2000 + DriveShaft * 4500 + CylinderHead * 3500 + BatteryCables * 1500 + FuelTank * 3000 + DriftTires * 2000;
+  const result1 = value1 * value2;
+  const result2 = QTDlockpick * 600 + QTDflipper * 1500 + QTDkit * 1000 + QTDkm  + QTDbateria * 500 + QTDalicate * 500 + QTDoleo * 1000 + QTDchave * 2000 + ReparoFora * 500 + QTDpneu * 500 + QTDcinto * 5000;
+  const result = result1 + result2;
+  const valorAprendiz = result * 0.45;
+  const valorMaquinaAprendiz = result - valorAprendiz;
+  const valorMaoAprendiz = result - valorMaquinaAprendiz;
   // valor com desconto aplicado
-  const resultDesconto = result * QTDdesconto;
-  const resultComDesconto = QTDdesconto === 1 ? result : result - result * QTDdesconto;
-  const valorAprendiz = resultComDesconto * cargo;
-  const valorMaquinaAprendiz = resultComDesconto - valorAprendiz;
-  const valorMaoAprendiz = resultComDesconto - valorMaquinaAprendiz;
+  const resultDesconto = result * QTDdesconto
+  const resultComDesconto = result - resultDesconto;
 
-  
-  
+
 
   console.log('Debug updateValores:');
-  console.log('Motor:', Motor);
-  console.log('Freio:', Freio);
-  console.log('Transmissao:', Transmissao);
+  console.log('QTDlockpick:', QTDlockpick);
+  console.log('QTDflipper:', QTDflipper);
+  console.log('QTDkm:', QTDkm);
   console.log('result:', result);
-  console.log('Desconto:', QTDdesconto);
-  console.log('Result Com Desconto:', resultComDesconto);
   console.log('valorAprendiz:', valorAprendiz);
   console.log('valorMaquinaAprendiz:', valorMaquinaAprendiz);
   console.log('valorMaoAprendiz:', valorMaoAprendiz);
@@ -100,107 +103,113 @@ export default function Home() {
   const [vendedor, setVendedor] = React.useState('');
   const [cliente, setCliente] = React.useState('');
 
+
   const [formData, setFormData] = React.useState({
     custumizador: '',
-    Motor: 0,
-    Freio: 0,
-    Suspensao: 0,
-    Transmissao: 0,
-    Turbo: 0,
-    OilPump: 0,
-    DriveShaft: 0,
-    CylinderHead: 0,
-    BatteryCables: 0,
-    FuelTank: 0,
-    DriftTires: 0,
+    tipo: 0,
+    quantidade: 0,
+    desgastado: 1,
+    QTDlockpick: 0,
+    QTDflipper: 0,
+    QTDchave: 0,
+    QTDalicate: 0,
+    QTDkit: 0,
+    QTDoleo: 0,
+    QTDbateria: 0,
+    QTDpneu: 0,
+    ReparoFora: 0,
+    QTDkm: 0,
     QTDdesconto: 1,
+    QTDcinto: 0,
     valorEmpresa: 0,
     valorMaoDeObra: 0,
     result: 0,    
-    cargo: 0.17,
   });
-
-  
 
   console.log({formData})
   const handleVendedorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setVendedor(e.target.value);
   };
 
-  const handleMotorChange = (e: SelectChangeEvent) => {
-    setMotor(Number(e.target.value));
+  const handleNumero2Change = (e: SelectChangeEvent) => {
+    const tipoValue = Number(e.target.value);
+    setValue2(tipoValue);
+    setFormData((prevData) => ({ ...prevData, tipo: tipoValue }));
+  };
+
+  const handleDesgastadoChange = (e: SelectChangeEvent) => {
+    const newDesgastado = Number(e.target.value);
+    setDesgastado(newDesgastado);
+  };
+
+
+  const handleNumero1Change = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setValue1(Number(e.target.value));
   };
   
-  const handleFreioChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFreio(Number(e.target.value));
+
+  const handleQTDlockpickChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setQTDlockpick(Number(e.target.value));
   };
   
-  const handleSuspensaoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSuspensao(Number(e.target.value));
+  const handleQTDflipperChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setQTDflipper(Number(e.target.value));
   };
   
-  const handleTransmissaoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTransmissao(Number(e.target.value));
+  const handleQTDkitChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setQTDkit(Number(e.target.value));
   };
 
-  const handleTurboChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTurbo(Number(e.target.value));
+  const handleQTDchaveChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setQTDchave(Number(e.target.value));
   };
-  const handleOilPumpChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setOilPump(Number(e.target.value));
-  };
-
-  const handleDriveShaftChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setDriveShaft(Number(e.target.value));
+  const handleQTDpneuChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setQTDpneu(Number(e.target.value));
   };
 
-  const handleCylinderHeadChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCylinderHead(Number(e.target.value));
+  const handleQTDalicateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setQTDalicate(Number(e.target.value));
   };
 
-  const handleBatteryCablesChange = (e: SelectChangeEvent) => {
-    setBatteryCables(Number(e.target.value));
+  const handleQTDoleoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setQTDoleo(Number(e.target.value));
   };
 
-  const handleFuelTankChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFuelTank(Number(e.target.value));
+  const handleReparoForaChange = (e: SelectChangeEvent) => {
+    setReparoFora(Number(e.target.value));
   };
 
-  const handleDriftTiresChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setDriftTires(Number(e.target.value));
+  const handleQTDbateriaChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setQTDbateria(Number(e.target.value));
+  };
+
+  
+  const handleQTDcintoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setQTDcinto(Number(e.target.value));
   };
 
   const handleQTDdescontoChange = (e: SelectChangeEvent) => {
     setQTDdesconto(Number(e.target.value));
   };
 
-  const handleCargoChange = (e: SelectChangeEvent) => {
-    setCargo(Number(e.target.value));
-  }
+  
+  
+  const handleQTDkmChange = (e: SelectChangeEvent) => {
+    setQTDkm(Number(e.target.value));
+  };
 
-  const updateValores = () => {
-    const result =
-    formData.Motor * 5000 +
-    formData.Freio * 6000 +
-    formData.Suspensao * 9000 +
-    formData.Transmissao * 8000 +
-    formData.Turbo * 10000 +
-    formData.OilPump * 2000 +
-    formData.DriveShaft * 4500 +
-    formData.CylinderHead * 3500 +
-    formData.BatteryCables * 1500 +
-    formData.FuelTank * 3000 +
-    formData.DriftTires * 2000;
-
-    const resultDesconto = result * formData.QTDdesconto;
-    const resultComDesconto = QTDdesconto === 1 ? result : result - result * QTDdesconto;
-    const valorMaoDeObra = resultComDesconto * formData.cargo;
-    
-    
+  const updateValores = (tipo: number, quantidade: number) => {
+    const result1 = value1 * formData.tipo;
+    const result2 = QTDlockpick * 600 + QTDflipper * 1500 + QTDkit * 1000 + QTDkm  + QTDbateria * 500 + QTDalicate * 500 + QTDoleo * 1000 + QTDchave * 2000 + ReparoFora * 500 + QTDpneu * 500 + QTDcinto * 5000;
+    const result = result1 + result2;
+    const valorMaoDeObra = result * 0.45;
+    // valor com desconto aplicado
+    const resultDesconto = result * QTDdesconto;
+    const resultComDesconto = result - resultDesconto;
 
     setFormData({
       ...formData,
-      valorEmpresa: resultComDesconto - valorMaoDeObra,
+      valorEmpresa: result - valorMaoDeObra, // Valor restante após subtrair valorMaoDeObra
       valorMaoDeObra: valorMaoDeObra,
       result: result,
     });
@@ -209,30 +218,32 @@ export default function Home() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-  const resultTotal = formData.Motor * 5000 + formData.Freio * 6000 + formData.Suspensao * 9000 + formData.Transmissao * 8000  + formData.Turbo * 10000 + formData.OilPump * 2000 + formData.DriveShaft * 4500 + formData.CylinderHead * 3500 + formData.BatteryCables * 1500 + formData.FuelTank * 3000 + formData.DriftTires * 2000;
+  const result3 = formData.quantidade * formData.tipo;
+  const result4 = formData.QTDlockpick * 600 + formData.QTDflipper * 1500 + formData.QTDkit * 1000 + formData.QTDkm + formData.QTDbateria * 500 + formData.QTDalicate * 500 + formData.QTDoleo * 1000 + formData.QTDchave * 2000 + formData.ReparoFora * 500 + formData.QTDpneu * 500 + formData.QTDcinto * 5000;
+  const resultTotal = result3 + result4;
+  const valorMaoDeObraAprendiz = resultTotal * 0.45;
   // valor com desconto aplicado
   const resultDesconto1 = resultTotal * formData.QTDdesconto;
-  const resultComDesconto1 = formData.QTDdesconto === 1 ? resultTotal : resultTotal - resultTotal * formData.QTDdesconto;
-  const valorMaoDeObraAprendiz = resultComDesconto1 * formData.cargo;
-  
+  const resultComDesconto1 = resultTotal - resultDesconto1;
 
   formData.custumizador = vendedor;
-  formData.Motor = Motor;
-  formData.Freio = Freio;
-  formData.Suspensao = Suspensao;
-  formData.Transmissao = Transmissao;
-  formData.Turbo = Turbo;
-  formData.OilPump= OilPump;
-  formData.DriveShaft = DriveShaft;
-  formData.CylinderHead = CylinderHead;
-  formData.BatteryCables = BatteryCables;
-  formData.FuelTank = FuelTank;
-  formData.DriftTires = DriftTires;
-  formData.QTDdesconto = QTDdesconto;
+  formData.quantidade = value1;
+  formData.tipo = value2;
+  formData.desgastado = desgastado;
+  formData.QTDlockpick = QTDlockpick;
+  formData.QTDkit = QTDkit;
+  formData.QTDalicate= QTDalicate;
+  formData.QTDchave = QTDchave;
+  formData.QTDoleo = QTDoleo;
+  formData.QTDbateria = QTDbateria;
+  formData.QTDpneu = QTDpneu;
+  formData.ReparoFora = ReparoFora;
+  formData.QTDcinto = QTDcinto;
+  formData.QTDkm = QTDkm;
+  formData.QTDflipper = QTDflipper;
   formData.result = resultTotal;
   formData.valorMaoDeObra = valorMaoDeObraAprendiz;
-  formData.valorEmpresa = resultComDesconto1 - valorMaoDeObraAprendiz;
-  formData.cargo = cargo;
+  formData.valorEmpresa = resultTotal - valorMaoDeObraAprendiz;
     
   
     // Remova as linhas que definem formData.result, formData.tipo e formData.quantidade aqui.
@@ -288,30 +299,32 @@ export default function Home() {
   };
   
 
-  const resultTotal = formData.Motor * 5000 + formData.Freio * 6000 + formData.Suspensao * 9000 + formData.Transmissao * 8000  + formData.Turbo * 10000 + formData.OilPump * 2000 + formData.DriveShaft * 4500 + formData.CylinderHead * 3500 + formData.BatteryCables * 1500 + formData.FuelTank * 3000 + formData.DriftTires * 2000;
+  const result3 = formData.quantidade * formData.tipo;
+  const result4 = formData.QTDlockpick * 600 + formData.QTDflipper * 1500 + formData.QTDkit * 1000 + formData.QTDkm + formData.QTDbateria * 500 + formData.QTDalicate * 500 + formData.QTDoleo * 1000 + formData.QTDchave * 2000 + formData.ReparoFora * 500 + formData.QTDpneu * 500 + formData.QTDcinto * 5000;
+  const resultTotal = result3 + result4;
+  const valorMaoDeObraAprendiz = resultTotal * 0.45;
   // valor com desconto aplicado
   const resultDesconto1 = resultTotal * formData.QTDdesconto;
-  const resultComDesconto1 = formData.QTDdesconto === 1 ? resultTotal : resultTotal - resultTotal * formData.QTDdesconto;
-  const valorMaoDeObraAprendiz = resultComDesconto1 * formData.cargo;
-
+  const resultComDesconto1 = resultTotal - resultDesconto1;
 
   formData.custumizador = vendedor;
-  formData.Motor = Motor;
-  formData.Freio = Freio;
-  formData.Suspensao = Suspensao;
-  formData.Transmissao = Transmissao;
-  formData.Turbo = Turbo;
-  formData.OilPump= OilPump;
-  formData.DriveShaft = DriveShaft;
-  formData.CylinderHead = CylinderHead;
-  formData.BatteryCables = BatteryCables;
-  formData.FuelTank = FuelTank;
-  formData.DriftTires = DriftTires;
-  formData.QTDdesconto = QTDdesconto;
+  formData.quantidade = value1;
+  formData.tipo = value2;
+  formData.desgastado = desgastado;
+  formData.QTDlockpick = QTDlockpick;
+  formData.QTDkit = QTDkit;
+  formData.QTDalicate= QTDalicate;
+  formData.QTDchave = QTDchave;
+  formData.QTDoleo = QTDoleo;
+  formData.QTDbateria = QTDbateria;
+  formData.QTDpneu = QTDpneu;
+  formData.ReparoFora = ReparoFora;
+  formData.QTDcinto = QTDcinto;
+  formData.QTDkm = QTDkm;
+  formData.QTDflipper = QTDflipper;
   formData.result = resultTotal;
   formData.valorMaoDeObra = valorMaoDeObraAprendiz;
-  formData.valorEmpresa = resultComDesconto1 - valorMaoDeObraAprendiz;
-  formData.cargo = cargo;
+  formData.valorEmpresa = resultTotal - valorMaoDeObraAprendiz;
 
       // button loading submit
 
@@ -349,124 +362,259 @@ export default function Home() {
       const [checked, setChecked] = React.useState(false);     
       const [myData, setMyData] = React.useState<number>(0);
 
-
-      const [state, setState] = React.useState({
-        Motor1: false,
-        Freio1: false,
-        Suspensao1: false,
-        Transmissao1: false,
-        Turbo1: false,
-        OilPump1: false,
-        DriveShaft1: false,
-        CylinderHead1: false,
-        BatteryCables1: false,
-        FuelTank1: false,
-        DriftTires1: false,
-      });
-    
-      const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, checked } = event.target;
-        setState({
-          ...state,
-          [name]: checked,
-        });
       
-        // Atualize os valores nos estados correspondentes
-        switch (name) {
-          case 'Motor1':
-            setMotor(checked ? 1 : 0);
-            break;
-          case 'Freio1':
-            setFreio(checked ? 1 : 0);
-            break;
-          case 'Suspensao1':
-            setSuspensao(checked ? 1 : 0);
-            break;
-          case 'Transmissao1':
-            setTransmissao(checked ? 1 : 0);
-            break;
-          case 'Turbo1':
-            setTurbo(checked ? 1 : 0);
-            break;
-          case 'OilPump1':
-            setOilPump(checked ? 1 : 0);
-            break;
-          case 'DriveShaft1':
-            setDriveShaft(checked ? 1 : 0);
-            break;
-          case 'CylinderHead1':
-            setCylinderHead(checked ? 1 : 0);
-            break;
-          case 'BatteryCables1':
-            setBatteryCables(checked ? 1 : 0);
-            break;
-          case 'FuelTank1':
-            setFuelTank(checked ? 1 : 0);
-            break;
-          case 'DriftTires1':
-            setDriftTires(checked ? 1 : 0);
-            break;
-          // Adicione casos para outros checkboxes conforme necessário
-          default:
-            break;
-        }
+      const handleMenuItemClick = (value: number) => {
+        setValue2(value);
       };
-    
-      const { 
-        Motor1,
-        Freio1,
-        Suspensao1,
-        Transmissao1,
-        Turbo1,
-        OilPump1,
-        DriveShaft1,
-        CylinderHead1,
-        BatteryCables1,
-        FuelTank1,
-        DriftTires1
-      } = state;
+      
 
-
-      React.useEffect(() => {
-        console.log('Debug updateValores:');
-        console.log('Motor:', Motor);
-        console.log('Freio:', Freio);
-        console.log('Transmissao:', Transmissao);
-        console.log('result:', result);
-        console.log('valorAprendiz:', valorAprendiz);
-        console.log('Desconto:', QTDdesconto);
-        console.log('Cargo:', cargo);
-        console.log('valorMaquinaAprendiz:', valorMaquinaAprendiz);
-        console.log('valorMaoAprendiz:', valorMaoAprendiz);
-      }, [Motor, Freio, Suspensao, Transmissao, Turbo, OilPump, DriveShaft, CylinderHead, BatteryCables, FuelTank, DriftTires]);
-          
   return (
       
       <main className={styles.main}>
       <Head>
-        <title>StrokeMaster</title>
-        <link rel="icon" href="/strokemaster.png" />
+        <title>Calculadora Hayes</title>
+        <link rel="icon" href="/hayes.webp" />
       </Head>
         <div className={styles.containerBox}>
           <div className={styles.box1}>  
             <div className={styles.boxTitulo}>
-              <h1>Calculadora StrokeMaster</h1>
+              <h1>Calculadora Hayes  </h1>
             </div>
             <div className={styles.boxInputs1}>            
               <form className={styles.box2} onSubmit={handleSubmit}>
-                <div className={styles.box2topo}>
-
                 <FormControl sx={{ m: 1, width: '20ch' }}>
                       <TextField
                           value={formData.custumizador}
                           onChange={handleVendedorChange}
                           id="filled-number"
-                          label="Nome do Customizador"
+                          label="Nome do Mêcanico"
                           name='custumizador'
                           type="text"
                           variant="standard"
                         />
                 </FormControl>
+                <FormControl variant='standard' sx={{ m: 1, width: '20ch' }}>
+                  <InputLabel id="demo-simple-select-label">Peças degastadas?</InputLabel>
+                  <Select
+                    type='number'
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    onChange={handleDesgastadoChange}
+                    value={String(desgastado)}
+                    name="desgastado"
+                    label="Peças desgastadas"                    
+                  >
+                    <MenuItem value={0}>Sim</MenuItem>
+                    <MenuItem value={1}>Não</MenuItem>      
+                  </Select>
+                </FormControl>
+                <FormControl variant='standard' sx={{ m: 1, width: '20ch' }}>
+                  <InputLabel id="demo-simple-select-label">Tipo</InputLabel>
+                  <Select
+                    type='number'
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    onChange={handleNumero2Change}
+                    value={String(value2)}
+                    name="tipo"
+                    label="Age"                    
+                  >
+                    <strong> CARRO </strong> 
+                    <MenuItem value={desgastado === 1 ? 901 : 1501}>D</MenuItem>
+                    <MenuItem value={desgastado === 1 ? 1100 : 1700}>C</MenuItem>
+                    <MenuItem value={desgastado === 1 ? 1300 : 2300}>B</MenuItem>
+                    <MenuItem value={desgastado === 1 ? 1500 : 2700}>A</MenuItem>
+                    <MenuItem value={desgastado === 1 ? 1700 : 3200}>S</MenuItem>
+                    <strong> MOTO </strong>   
+                    <MenuItem value={desgastado === 1 ? 900 : 1500}>M</MenuItem>      
+                  </Select>
+                </FormControl>
+                <FormControl sx={{ m: 1, width: '20ch' }}>
+                  <TextField
+                      value={value1}
+                      onChange={handleNumero1Change}
+                      id="filled-number"
+                      label="Quantidade"
+                      name='quantidade'
+                      type="number"
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                      variant="standard"
+                    />
+                </FormControl>
+                
+                <FormControl sx={{ m: 1, width: '20ch' }}>
+                  <TextField
+                    value={QTDlockpick}
+                    onChange={handleQTDlockpickChange}
+                    id="filled-number"
+                    label="QTD Lockpick"
+                    name="QTDlockpick"
+                    type="number"
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    variant="standard"
+                  />
+                </FormControl>
+
+                <FormControl sx={{ m: 1, width: '20ch' }}>
+                  <TextField
+                    value={QTDflipper}
+                    onChange={handleQTDflipperChange}
+                    id="filled-number"
+                    label="QTD Flipper"
+                    name="QTDflipper"
+                    type="number"
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    variant="standard"
+                  />
+                </FormControl>
+
+                <FormControl sx={{ m: 1, width: '20ch' }}>
+                  <TextField
+                    value={QTDkit}
+                    onChange={handleQTDkitChange}
+                    id="filled-number"
+                    label="QTD kit reparo"
+                    name="QTDkit"
+                    type="number"
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    variant="standard"
+                  />
+                </FormControl>
+                <FormControl sx={{ m: 1, width: '20ch' }}>
+                  <TextField
+                    value={QTDoleo}
+                    onChange={handleQTDoleoChange}
+                    id="filled-number"
+                    label="QTD Oleo"
+                    name="QTDoleo"
+                    type="number"
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    variant="standard"
+                  />
+                </FormControl>
+
+                <FormControl sx={{ m: 1, width: '20ch' }}>
+                  <TextField
+                    value={QTDchave}
+                    onChange={handleQTDchaveChange}
+                    id="filled-number"
+                    label="QTD Chave de fenda"
+                    name="QTDkit"
+                    type="number"
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    variant="standard"
+                  />
+                </FormControl>
+
+                <FormControl sx={{ m: 1, width: '20ch' }}>
+                  <TextField
+                    value={QTDalicate}
+                    onChange={handleQTDalicateChange}
+                    id="filled-number"
+                    label="QTD Alicate"
+                    name="QTDalicate"
+                    type="number"
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    variant="standard"
+                  />
+                </FormControl>
+
+                <FormControl sx={{ m: 1, width: '20ch' }}>
+                  <TextField
+                    value={QTDbateria}
+                    onChange={handleQTDbateriaChange}
+                    id="filled-number"
+                    label="QTD Bateria"
+                    name="QTDbateria"
+                    type="number"
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    variant="standard"
+                  />
+                </FormControl>
+
+                <FormControl sx={{ m: 1, width: '20ch' }}>
+                  <TextField
+                    value={QTDpneu}
+                    onChange={handleQTDpneuChange}
+                    id="filled-number"
+                    label="QTD de pneu"
+                    name="QTDpneu"
+                    type="number"
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    variant="standard"
+                  />
+                </FormControl>
+
+                <FormControl sx={{ m: 1, width: '20ch' }}>
+                  <TextField
+                    value={QTDcinto}
+                    onChange={handleQTDcintoChange}
+                    id="filled-number"
+                    label="QTD de cinto de corrida"
+                    name="QTDcinto"
+                    type="number"
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    variant="standard"
+                  />
+                </FormControl>
+
+                
+                
+
+                <FormControl variant='standard' sx={{ m: 1, width: '20ch' }}>
+                  <InputLabel id="demo-simple-select-label">Teve Guincho?</InputLabel>
+                  <Select
+                    type='number'
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    onChange={handleQTDkmChange}
+                    value={String(QTDkm)}
+                    name="ReparoFora"
+                    label="Teve reparo fora da mecanica?"                    
+                  >
+                    <MenuItem value={0}>Não Teve</MenuItem>
+                    <MenuItem value={500}>Sul</MenuItem>
+                    <MenuItem value={700}>Sandy</MenuItem> 
+                    <MenuItem value={1000}>Paleto</MenuItem>        
+                  </Select>
+                </FormControl>
+
+                <FormControl variant='standard' sx={{ m: 1, width: '20ch' }}>
+                  <InputLabel id="demo-simple-select-label">Teve reparo fora da mecanica?</InputLabel>
+                  <Select
+                    type='number'
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    onChange={handleReparoForaChange}
+                    value={String(ReparoFora)}
+                    name="ReparoFora"
+                    label="Teve reparo fora da mecanica?"                    
+                  >
+                    <MenuItem value={1}>Sim</MenuItem>
+                    <MenuItem value={0}>Não</MenuItem>      
+                  </Select>
+                </FormControl>
+
                 <FormControl variant='standard' sx={{ m: 1, width: '20ch' }}>
                   <InputLabel id="demo-simple-select-label">Tem cupom?</InputLabel>
                   <Select
@@ -475,7 +623,7 @@ export default function Home() {
                     id="demo-simple-select"
                     onChange={handleQTDdescontoChange}
                     value={String(QTDdesconto)}
-                    name="QTDdesconto"
+                    name="desgastado"
                     label="Quantidade de desconto"                    
                   >
                     <MenuItem value={1}>Não tem</MenuItem>      
@@ -485,118 +633,23 @@ export default function Home() {
                     <MenuItem value={0.50}>50%</MenuItem>       
                   </Select>
                 </FormControl>
-                </div>
-                <div className={styles.box2middle}>
-                  <FormControl required component="fieldset" sx={{ m: 1 , justifyContent: 'center' }} variant="standard">
-                    <FormGroup sx={{ m: 1 , justifyContent: 'center' }} row>
-                      <FormControlLabel
-                        control={
-                          <Checkbox checked={Motor1} onChange={handleChange} name="Motor1" />
-                        }
-                        label="Motor"
-                      />
-                      <FormControlLabel
-                        control={
-                          <Checkbox checked={Freio1} onChange={handleChange} name="Freio1" />
-                        }
-                        label="Freio"
-                      />
-                      <FormControlLabel
-                        control={
-                          <Checkbox checked={Suspensao1} onChange={handleChange} name="Suspensao1" />
-                        }
-                        label="Suspensão"
-                      />
-                      <FormControlLabel
-                        control={
-                          <Checkbox checked={Transmissao1} onChange={handleChange} name="Transmissao1" />
-                        }
-                        label="Transmissão"
-                      />
-                      <FormControlLabel
-                        control={
-                          <Checkbox checked={Turbo1} onChange={handleChange} name="Turbo1" />
-                        }
-                        label="Turbo"
-                      />
-                      <FormControlLabel
-                        control={
-                          <Checkbox checked={OilPump1} onChange={handleChange} name="OilPump1" />
-                        }
-                        label="Oil Pump"
-                      />
-                      <FormControlLabel
-                        control={
-                          <Checkbox checked={DriveShaft1} onChange={handleChange} name="DriveShaft1" />
-                        }
-                        label="Drive Shaft"
-                      />
-                      <FormControlLabel
-                        control={
-                          <Checkbox checked={CylinderHead1} onChange={handleChange} name="CylinderHead1" />
-                        }
-                        label="Cylinder Head"
-                      />
-                      <FormControlLabel
-                        control={
-                          <Checkbox checked={BatteryCables1} onChange={handleChange} name="BatteryCables1" />
-                        }
-                        label="Battery Cables"
-                      />
-                      <FormControlLabel
-                        control={
-                          <Checkbox checked={FuelTank1} onChange={handleChange} name="FuelTank1" />
-                        }
-                        label="Fuel Tank"
-                      />
-                      <FormControlLabel
-                        control={
-                          <Checkbox checked={DriftTires1} onChange={handleChange} name="DriftTires1" />
-                        }
-                        label="Drift Tires"
-                      />
-                    </FormGroup>
-                  </FormControl>
-                </div>
-
-                <div className={styles.boxCargo}>
-                  <FormControl variant='standard' sx={{ m: 1, width: '30ch' }}>
-                    <InputLabel id="demo-simple-select-label">Qual seu cargo?</InputLabel>
-                    <Select
-                      type='number'
-                      labelId="demo-simple-select-label"
-                      id="demo-simple-select"
-                      onChange={handleCargoChange}
-                      value={String(cargo)}
-                      name="desgastado"
-                      label="Qual seu cargo?"                    
-                    >
-                      <MenuItem value={0.13}>Aprendiz</MenuItem>      
-                      <MenuItem value={0.17}>Mecânico</MenuItem>
-                      <MenuItem value={0.22}>Estoquista</MenuItem>
-                      <MenuItem value={0.30}>Gerente</MenuItem>            
-                    </Select>
-                  </FormControl>
-                </div>
-                  
                   <div className={styles.boxInputs2}>              
                     <input value={formData.result} type="hidden" name="result" id="" />
-                    <input value={Motor} type="hidden" name="Motor" id="" />
-                    <input value={Freio} type="hidden" name="Freio" id="" />
-                    <input value={Suspensao} type="hidden" name="Suspensao" id="" />
-                    <input value={Transmissao} type="hidden" name="Transmissao" id="" />
-                    <input value={Turbo} type="hidden" name="Turbo" id="" />
-                    <input value={OilPump} type="hidden" name="OilPump" id="" />
-                    <input value={DriveShaft} type="hidden" name="DriveShaft" id="" />
-                    <input value={CylinderHead} type="hidden" name="CylinderHead" id="" />
-                    <input value={BatteryCables} type="hidden" name="BatteryCables" id="" />
-                    <input value={FuelTank} type="hidden" name="FuelTank" id="" />
-                    <input value={DriftTires} type="hidden" name="DriftTires" id="" />
+                    <input value={formData.quantidade} type="hidden" name="quantidade" id="" />
+                    <input value={formData.tipo} type="hidden" name="tipo" id="" />
+                    <input value={QTDlockpick} type="hidden" name="QTDlockpick" id="" />
+                    <input value={QTDflipper} type="hidden" name="QTDflipper" id="" />
+                    <input value={QTDalicate} type="hidden" name="QTDalicate" id="" />
+                    <input value={QTDchave} type="hidden" name="QTDchave" id="" />
+                    <input value={QTDoleo} type="hidden" name="QTDoleo" id="" />
+                    <input value={QTDbateria} type="hidden" name="QTDbateria" id="" />
+                    <input value={ReparoFora} type="hidden" name="ReparoFora" id="" />
+                    <input value={QTDkit} type="hidden" name="QTDkit" id="" />
+                    <input value={QTDkm} type="hidden" name="QTDkm" id="" />
                   </div>   
                   <div className={styles.btnBox}>
                     <Button
                       variant="outlined"
-                      color="error"
                       sx={buttonSx}
                       type="submit"
                       disabled={loading}
@@ -623,25 +676,13 @@ export default function Home() {
           <section className={styles.sectionTotal}>
               <div className={styles.boxTotal}>
                 <div>
-                  <h1>{cargoNome}</h1>
+                  <h1>MÊCANICO</h1>
                   <h2>VALOR TOTAL</h2>
                 </div> 
                 <div>
                   <p>${result}</p>
                 </div>
-                <div>
-                  <h2>VALOR NA MÃO</h2>
-                </div> 
-                <div>
-                  <p>${valorMaoAprendiz}</p>
-                </div>
-                <div>
-                  <h2>VALOR NA MAQUINA</h2>
-                </div> 
-                <div>
-                  <p>${valorMaquinaAprendiz}</p>
-                </div>
-                {QTDdesconto !== 1 &&(
+                {resultComDesconto !== 0 &&(
                   <div>
                     <div>
                       <h2>VALOR COM DESCONTO</h2>
