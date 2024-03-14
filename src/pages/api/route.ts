@@ -46,7 +46,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       });
 
       // Verificar se a aba (sheet) já existe
-      const sheetExists = await doesSheetExist(sheets, '1OZ-Pc8lCRo-uvtihH-f8ctLjsqjxOCsVkK3swDe20ZQ',body.custumizador);
+      const sheetExists = await doesSheetExist(sheets, '1zfIMBS8sFVkIBSjalex2sk-1sl-g2vqvkZvcNVEnMyQ',body.custumizador);
       if (!sheetExists) {
         // Se a aba não existir, criar uma nova
         return res.status(400).json({ error: 'A aba não existe. Por favor, crie uma nova aba.' });
