@@ -23,10 +23,10 @@ body > div{
 }
 body {
   color: rgb(var(--foreground-rgb));
-  background: url(../../public/hayes-bg.png) white;
-  background-size: contain;
+  background: url(../../public/wallpaperflare.com_wallpaper\ \(4\).jpg);
+  background-size: cover;
   background-repeat: no-repeat;
-  background-position: top;
+  background-position: left;
 
 
   display: flex;
