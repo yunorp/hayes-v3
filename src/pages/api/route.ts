@@ -21,6 +21,7 @@ type SheetForm = {
   valorMaoDeObra: number;
   result: number;
   role: string;
+  apenasReparo: boolean;
 };
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -63,6 +64,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           values: [
             [
               body.custumizador,
+              `=IFS(${body.apenasReparo}=TRUE;"SIM";${body.apenasReparo}=FALSE;"NÃO")`,
               `=IFS(${body.tipo}=0;"Nenhuma";${body.tipo}=700;"S";${body.tipo}=3200;"S";${body.tipo}=600;"A";${body.tipo}=2700;"A";${body.tipo}=500;"B";${body.tipo}=2300;"B";${body.tipo}=400;"C";${body.tipo}=1700;"C";${body.tipo}=250;"D";${body.tipo}=1501;"D";${body.tipo}=650;"M";${body.tipo}=1500;"M")`,
               body.quantidade,
               body.QTDlockpick,
