@@ -721,7 +721,7 @@ export default function Home() {
           </section>             
         </div>
         <footer className={styles.assinatura}>
-          <p>© Feito por <a target='_blank' href="https://ellysonalves.github.io/Meu-Portfolio/">Éllyson Alves</a></p>
+          <p>© Feito por <a target='_blank' href="https://github.com/yunorp/">Yuno</a></p>
         </footer>
       </main>
   )
