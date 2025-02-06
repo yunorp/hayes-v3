@@ -23,7 +23,7 @@ body > div{
 }
 body {
   color: rgb(var(--foreground-rgb));
-  background: url(../../public/carmazdarx7.jpg);
+  background: url(../../public/car-mazdarx7.jpg);
   background-size: cover;
   background-repeat: no-repeat;
   background-position: left;
