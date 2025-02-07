@@ -87,17 +87,17 @@ export default function Home() {
 
   if (!apenasReparo) {
     if (value2 === 300) {
-      bonus = 00;
+      bonus = 100;
     } else if (value2 === 600) {
-      bonus = 00;
+      bonus = 100;
     } else if (value2 === 500) {
-      bonus = 00;
+      bonus = 100;
     } else if (value2 === 400) {
-      bonus = 00;
+      bonus = 100;
     } else if (value2 === 250) {
-      bonus = 00;
+      bonus = 100;
     } else if (value2 === 650) {
-      bonus = 000;
+      bonus = 100;
     }
   }
 
@@ -443,13 +443,13 @@ export default function Home() {
                   >
                     <MenuItem value={0}>Nenhum</MenuItem>
                     <strong> CARRO </strong>                    
-                    <MenuItem value={apenasReparo === true ? 300 : 00}>D</MenuItem>
-                    <MenuItem value={apenasReparo === true ? 400 : 00}>C</MenuItem>
-                    <MenuItem value={apenasReparo === true ? 500 : 00}>B</MenuItem>
-                    <MenuItem value={apenasReparo === true ? 600 : 00}>A</MenuItem>
-                    <MenuItem value={apenasReparo === true ? 700 : 00}>S</MenuItem>
+                    <MenuItem value={apenasReparo === true ? 300 : 100}>D</MenuItem>
+                    <MenuItem value={apenasReparo === true ? 400 : 100}>C</MenuItem>
+                    <MenuItem value={apenasReparo === true ? 500 : 100}>B</MenuItem>
+                    <MenuItem value={apenasReparo === true ? 600 : 100}>A</MenuItem>
+                    <MenuItem value={apenasReparo === true ? 700 : 100}>S</MenuItem>
                     <strong> MOTO </strong>   
-                    <MenuItem value={apenasReparo === true ? 700 : 00}>M</MenuItem>      
+                    <MenuItem value={apenasReparo === true ? 700 : 100}>M</MenuItem>      
                   </Select>
                 </FormControl>
                 <FormControl sx={{ m: 1, width: '20ch' }}>
