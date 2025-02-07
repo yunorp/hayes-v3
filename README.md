@@ -1,5 +1,5 @@
 # 🔢 Calculadora HAYES 🧮
-#### GitHub Pages: [Clique aqui para acessar](hayes-v3.vercel.app)
+#### GitHub Pages: [Clique aqui para acessar](http://hayes-v3.vercel.app)
 > [!NOTE]
 >Este é um projeto surgiu da necessidade de amigos que precisavam calcular o valor total de venda de certos produtos mais rapidamente do que apenas utilizando manualmente uma calculadora, priorizando a qualidade da jogatina.
 
