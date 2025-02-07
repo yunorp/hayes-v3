@@ -80,11 +80,11 @@
   .boxTotal{
     width: 150px;
     height: auto;
-    border: 1px solid green;
+    border: 1px solid blue;
     border-radius: 20px;
     text-align: center;
     background-color: white;
-    box-shadow: 0px 0px 10px 0px green;
+    box-shadow: 0px 0px 10px 0px red;
   }
   .boxTotal h1{
     color:white;
