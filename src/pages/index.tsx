@@ -86,23 +86,23 @@ export default function Home() {
   let bonus = 0;
 
   if (!apenasReparo) {
-    if (value2 === 700) {
-      bonus = 1700;
+    if (value2 === 300) {
+      bonus = 00;
     } else if (value2 === 600) {
-      bonus = 1500;
+      bonus = 00;
     } else if (value2 === 500) {
-      bonus = 1300;
+      bonus = 00;
     } else if (value2 === 400) {
-      bonus = 1100;
+      bonus = 00;
     } else if (value2 === 250) {
-      bonus = 900;
+      bonus = 00;
     } else if (value2 === 650) {
-      bonus = 1000;
+      bonus = 000;
     }
   }
 
   const result1 = value1 * value2;
-  const result2 = QTDlockpick * 600 + QTDflipper * 1500 + QTDkit * 1000 + QTDkm + QTDbateria * 3500 + QTDalicate * 1800 + QTDoleo * 1000 + QTDchave * 2000 + ReparoFora * 500 + QTDpneu * 500 + QTDcinto * 5000 + bonus;
+  const result2 = QTDlockpick * 300 + QTDflipper * 500 + QTDkit * 1000 + QTDkm + QTDbateria * 3500 + QTDalicate * 1800 + QTDoleo * 100 + QTDchave * 200 + ReparoFora * 500 + QTDpneu * 500 + QTDcinto * 5000 + bonus;
   const result = result1 + result2;
   const valorAprendiz = result * 0.45;
   const valorMaquinaAprendiz = result - valorAprendiz;
@@ -443,13 +443,13 @@ export default function Home() {
                   >
                     <MenuItem value={0}>Nenhum</MenuItem>
                     <strong> CARRO </strong>                    
-                    <MenuItem value={apenasReparo === true ? 900 : 250}>D</MenuItem>
-                    <MenuItem value={apenasReparo === true ? 1100 : 400}>C</MenuItem>
-                    <MenuItem value={apenasReparo === true ? 1300 : 500}>B</MenuItem>
-                    <MenuItem value={apenasReparo === true ? 1500 : 600}>A</MenuItem>
-                    <MenuItem value={apenasReparo === true ? 1700 : 700}>S</MenuItem>
+                    <MenuItem value={apenasReparo === true ? 300 : 00}>D</MenuItem>
+                    <MenuItem value={apenasReparo === true ? 400 : 00}>C</MenuItem>
+                    <MenuItem value={apenasReparo === true ? 500 : 00}>B</MenuItem>
+                    <MenuItem value={apenasReparo === true ? 600 : 00}>A</MenuItem>
+                    <MenuItem value={apenasReparo === true ? 700 : 00}>S</MenuItem>
                     <strong> MOTO </strong>   
-                    <MenuItem value={apenasReparo === true ? 1000 : 650}>M</MenuItem>      
+                    <MenuItem value={apenasReparo === true ? 700 : 00}>M</MenuItem>      
                   </Select>
                 </FormControl>
                 <FormControl sx={{ m: 1, width: '20ch' }}>
@@ -488,7 +488,7 @@ export default function Home() {
                     value={QTDflipper}
                     onChange={handleQTDflipperChange}
                     id="filled-number"
-                    label="QTD Flipper"
+                    label="QTD Lockpick Avançada"
                     name="QTDflipper"
                     type="number"
                     InputLabelProps={{
@@ -616,7 +616,7 @@ export default function Home() {
                     name="ReparoFora"
                     label="Teve reparo fora da mecanica?"                    
                   >
-                    <MenuItem value={0}>Não Teve</MenuItem>
+                    <MenuItem value={0}>Não</MenuItem>
                     <MenuItem value={500}>Sul</MenuItem>
                     <MenuItem value={700}>Sandy</MenuItem> 
                     <MenuItem value={1000}>Paleto</MenuItem>        
